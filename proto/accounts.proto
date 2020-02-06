@@ -1,0 +1,33 @@
+// gRPC for Accounts database
+
+syntax = "proto3";
+
+package accounts;
+
+service Accounting {
+    rpc GetProfile(IdRequest) returns (ProfileReply) {}
+    rpc CreateProfile(ProfileRequest) returns (ProfileReply) {}
+    rpc RemoveProfile(IdRequest) returns (Empty) {}
+    rpc Ban(IdRequest) returns (Empty) {}
+    rpc Unban(IdRequest) returns (Empty) {}
+}
+
+message IdRequest {
+    string id = 1;
+}
+
+message Empty {}
+
+message ProfileRequest {
+    string discord = 1;
+    string bungie = 2;
+    string faceit = 3;
+}
+
+message ProfileReply {
+    string id = 1;
+    string discord = 2;
+    string bungie = 3;
+    string faceit = 4;
+    bool   banned = 5;
+}
