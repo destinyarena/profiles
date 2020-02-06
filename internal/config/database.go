@@ -2,7 +2,7 @@ package config
 
 import (
     "os"
-    "github.com/arturoguerra/destinyarena-accounts/structs"
+    "github.com/arturoguerra/destinyarena-accounts/internal/structs"
 )
 
 func LoadDatabaseConfig() *structs.Database {

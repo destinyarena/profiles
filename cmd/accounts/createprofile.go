@@ -6,14 +6,14 @@ import (
 )
 
 func (a *AccountingServer) CreateProfile(ctx context.Context, in *pb.ProfileRequest) (*pb.ProfileReply, error) {
-    err, u := a.DB.RegisterUser(in.GetDiscord(), in.GetBungie(). in.GetFaceit())
+    err, u := a.DB.RegisterUser(in.GetDiscord(), in.GetBungie(), in.GetFaceit())
     if err != nil {
         log.Error(err)
         return nil, err
     }
 
     return &pb.ProfileReply{
-        Id: u.UUID,
+        Id: u.UUID.String(),
         Discord: u.Discord,
         Bungie: u.Bungie,
         Faceit: u.Faceit,
