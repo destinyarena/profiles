@@ -18,9 +18,9 @@ import (
 
 var log = logging.New()
 
-type AccountingServer struct {
+type ProfilesServer struct {
     DB *database.DBClient
-    pb.UnimplementedAccountingServer
+    pb.UnimplementedUsersServer
 }
 
 func main() {
@@ -40,11 +40,11 @@ func main() {
         log.Fatal(err)
     }
 
-    as := &AccountingServer{
+    as := &ProfilesServer{
         DB: db,
     }
 
-    pb.RegisterAccountingServer(s, as)
+    pb.RegisterUsersServer(s, as)
     if err := s.Serve(lis); err != nil {
         log.Fatalf("Failed to serve: %v", err)
     }

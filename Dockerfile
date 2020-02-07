@@ -7,5 +7,5 @@ RUN make build
 
 FROM alpine:latest
 WORKDIR /app
-COPY --from=builder /build/bin/accounts /app
-CMD ["./accounts"]
+COPY --from=builder /build/bin/profiles /app
+CMD ["./profiles"]

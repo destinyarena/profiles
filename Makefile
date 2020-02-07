@@ -2,7 +2,7 @@
 
 GORUN = go run
 GOBUILD = go build
-APPNAME = accounts
+APPNAME = profiles
 
 all: clean build
 

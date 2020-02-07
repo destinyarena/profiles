@@ -2,9 +2,9 @@
 
 syntax = "proto3";
 
-package accounts;
+package profiles;
 
-service Accounting {
+service Users {
     rpc GetProfile(IdRequest) returns (ProfileReply) {}
     rpc CreateProfile(ProfileRequest) returns (ProfileReply) {}
     rpc RemoveProfile(IdRequest) returns (Empty) {}

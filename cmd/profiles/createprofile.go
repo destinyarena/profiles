@@ -5,8 +5,8 @@ import (
     pb "github.com/arturoguerra/destinyarena-accounts/proto"
 )
 
-func (a *AccountingServer) GetProfile(ctx context.Context, in *pb.IdRequest) (*pb.ProfileReply, error) {
-    err, u := a.DB.GetUser(in.GetId())
+func (p *ProfilesServer) CreateProfile(ctx context.Context, in *pb.ProfileRequest) (*pb.ProfileReply, error) {
+    err, u := p.DB.RegisterUser(in.GetDiscord(), in.GetBungie(), in.GetFaceit())
     if err != nil {
         log.Error(err)
         return nil, err
