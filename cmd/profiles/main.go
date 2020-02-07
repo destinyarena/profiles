@@ -20,7 +20,7 @@ var log = logging.New()
 
 type ProfilesServer struct {
     DB *database.DBClient
-    pb.UnimplementedUsersServer
+    pb.UnimplementedProfilesServer
 }
 
 func main() {
@@ -44,7 +44,7 @@ func main() {
         DB: db,
     }
 
-    pb.RegisterUsersServer(s, as)
+    pb.RegisterProfilesServer(s, as)
     if err := s.Serve(lis); err != nil {
         log.Fatalf("Failed to serve: %v", err)
     }

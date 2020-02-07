@@ -4,7 +4,7 @@ syntax = "proto3";
 
 package profiles;
 
-service Users {
+service profiles {
     rpc GetProfile(IdRequest) returns (ProfileReply) {}
     rpc CreateProfile(ProfileRequest) returns (ProfileReply) {}
     rpc RemoveProfile(IdRequest) returns (Empty) {}

@@ -6,6 +6,7 @@ import (
 )
 
 func (p *ProfilesServer) GetProfile(ctx context.Context, in *pb.IdRequest) (*pb.ProfileReply, error) {
+    log.Infof("Fetching Profile for: %s", in.GetId())
     err, u := p.DB.GetUser(in.GetId())
     if err != nil {
         log.Error(err)
