@@ -25,7 +25,7 @@ type ProfilesServer struct {
 
 func main() {
     cfg := config.LoadConfig()
-    address := fmt.Sprintf("%s:%s", cfg.Host, cfg.Port)
+    address := fmt.Sprintf("%s:%s", cfg.GRPCHost, cfg.GRPCPort)
     lis, err := net.Listen("tcp", address)
     if err != nil {
         log.Fatal(err.Error())

@@ -7,7 +7,7 @@ import (
 
 func LoadConfig() *structs.Config {
     return &structs.Config{
-        Host: os.Getenv("HOST"),
-        Port: os.Getenv("PORT"),
+        GRPCHost: os.Getenv("GRPC_HOST"),
+        GRPCPort: os.Getenv("GRPC_PORT"),
     }
 }

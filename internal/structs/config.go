@@ -1,6 +1,6 @@
 package structs
 
 type Config struct {
-    Host string
-    Port string
+    GRPCHost string
+    GRPCPort string
 }
