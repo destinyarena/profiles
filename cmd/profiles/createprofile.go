@@ -13,6 +13,8 @@ func (p *ProfilesServer) CreateProfile(ctx context.Context, in *pb.ProfileReques
         return nil, err
     }
 
+    log.Infof("Registering Discord: %s Bungie: %s Faceit: %s", u.Discord, u.Bungie, u.Faceit)
+
     return &pb.ProfileReply{
         Id: u.UUID.String(),
         Discord: u.Discord,
