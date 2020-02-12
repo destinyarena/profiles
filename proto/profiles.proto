@@ -6,6 +6,7 @@ package profiles;
 
 service profiles {
     rpc GetProfile(IdRequest) returns (ProfileReply) {}
+    rpc GetAllProfiles(Empty) returns (stream ProfileReply) {}
     rpc CreateProfile(ProfileRequest) returns (ProfileReply) {}
     rpc RemoveProfile(IdRequest) returns (Empty) {}
     rpc Ban(IdRequest) returns (Empty) {}
