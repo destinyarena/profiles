@@ -4,19 +4,14 @@ package database
 Marks user as banned
 */
 
-func (f *DBClient) Ban(uid string) error {
-    err, user := f.GetUser(uid)
+func (c client) Ban(uid string) error {
+    err, user := c.GetUser(uid)
     if err != nil {
         return err
     }
 
-    db, err := f.Connect()
-    if err != nil {
-        return err
-    }
-    defer db.Close()
 
     user.Banned = true
-    db.Save(user)
+    c.Save(user)
     return nil
 }

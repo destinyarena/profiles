@@ -19,7 +19,7 @@ import (
 var log = logging.New()
 
 type ProfilesServer struct {
-    DB *database.DBClient
+    DB database.Client
     pb.UnimplementedProfilesServer
 }
 
@@ -35,8 +35,8 @@ func main() {
 
     s := grpc.NewServer()
     dbcfg := config.LoadDatabaseConfig()
-    db := database.New(dbcfg.Username, dbcfg.Password, dbcfg.Host, dbcfg.DBName)
-    if err := db.Init(); err != nil {
+    db, err := database.New(dbcfg.Username, dbcfg.Password, dbcfg.Host, dbcfg.DBName)
+    if err != nil {
         log.Fatal(err)
     }
 
@@ -46,6 +46,9 @@ func main() {
 
     pb.RegisterProfilesServer(s, as)
     if err := s.Serve(lis); err != nil {
+        db.Close()
         log.Fatalf("Failed to serve: %v", err)
     }
+
+    db.Close()
 }

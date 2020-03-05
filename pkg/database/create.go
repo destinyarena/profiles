@@ -8,28 +8,21 @@ import (
     "errors"
 )
 
-func (f *DBClient) RegisterUser(discord, bungie, faceit string) (error, *User) {
-    db, err := f.Connect()
-    if err != nil {
-        return err, nil
-    }
-
-    defer db.Close()
-
+func (c *client) RegisterUser(discord, bungie, faceit string) (error, *User) {
     u := User{}
-    if db.Where("discord = ? OR faceit = ? OR bungie = ?", discord, faceit, bungie).First(&u).RecordNotFound() {
+    if c.Where("discord = ? OR faceit = ? OR bungie = ?", discord, faceit, bungie).First(&u).RecordNotFound() {
         newUser := &User{
             Discord: discord,
             Bungie:  bungie,
             Faceit:  faceit,
         }
 
-        db.Create(newUser)
+        c.Create(newUser)
 
         return nil, newUser
     }
 
-    err = errors.New("Member already exists")
+    err := errors.New("Member already exists")
 
     return err, &u
 }

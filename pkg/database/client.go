@@ -6,37 +6,53 @@ import (
     _ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-type DBClient struct {
-    Username string
-    Password string
-    Host     string
-    DBName   string
-}
+type (
+    client struct {
+        *gorm.DB // Extends Gorm DB Struct to add our methods
+    }
 
-func (c *DBClient) Connect() (*gorm.DB, error) {
-    connectionString := fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", c.Username, c.Password, c.Host, c.DBName)
+    Client interface {
+        Ban(string) error
+        RegisterUser(string, string, string) (error, *User)
+        GetAllUsers() (error, []User)
+        GetUser(string) (error, *User)
+        DeleteUser(string) error
+        Close() error
+    }
+)
+
+func connect(username, password, host, dbname string) (*gorm.DB, error) {
+    connectionString := fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", username, password, host, dbname)
     db, err := gorm.Open("mysql", connectionString)
     return db, err
 }
 
-func New(username, password, host, dbname string) *DBClient {
-    return &DBClient{
-        username,
-        password,
-        host,
-        dbname,
-    }
-}
-
-func (c *DBClient) Init() error {
-    db, err := c.Connect()
-    if err != nil {
-        return err
-    }
-
-    defer db.Close()
-
-    db.AutoMigrate(&User{})
+func (c *client) Init() error {
+    c.AutoMigrate(&User{})
 
     return nil
 }
+
+
+func (c *client) Close() error {
+    return c.DB.Close()
+}
+
+/*
+Returns new DB Client or error
+*/
+func New(username, password, host, dbname string) (Client, error) {
+    db, err := connect(username, password, host, dbname)
+    if err != nil {
+        return nil, err
+    }
+
+    c := &client{db}
+
+    if err = c.Init(); err != nil {
+        return nil, err
+    }
+
+    return c, err
+}
+
