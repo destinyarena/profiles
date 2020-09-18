@@ -4,12 +4,11 @@ import (
 	pb "github.com/destinyarena/profiles/proto"
 )
 
-// GetAllProfiles returns a list of every profile
-func (f *profilesServer) GetAllProfiles(in *pb.Empty, stream pb.Profiles_GetAllProfilesServer) error {
-	log.Infof("Here we go again getting every profile...")
-	profiles, err := f.DB.GetAllUsers()
+// GetProfilesByIP returns a list of users that have this ip
+func (f *profilesServer) GetProfilesByIP(in *pb.IPRequest, stream pb.Profiles_GetProfilesByIPServer) error {
+	log.Infof("Getting profiles by IP Hash: %s", in.GetIphash())
+	profiles, err := f.DB.GetUsersByIP(in.GetIphash())
 	if err != nil {
-		log.Error(err)
 		return err
 	}
 
@@ -18,8 +17,8 @@ func (f *profilesServer) GetAllProfiles(in *pb.Empty, stream pb.Profiles_GetAllP
 			Id:      profile.UUID.String(),
 			Discord: profile.Discord,
 			Bungie:  profile.Bungie,
-			Faceit:  profile.Faceit,
 			Banned:  profile.Banned,
+			Iphash:  profile.IPHash,
 		}
 
 		if err := stream.Send(p); err != nil {

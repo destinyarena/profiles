@@ -4,51 +4,50 @@ package main
 This package handles communication between our other microservices and our accounts database
 */
 
-
 import (
-    "fmt"
-    "net"
-    "google.golang.org/grpc"
-    pb "github.com/arturoguerra/destinyarena-accounts/proto"
-    database "github.com/arturoguerra/destinyarena-accounts/pkg/database"
-    "github.com/arturoguerra/destinyarena-accounts/internal/logging"
-    "github.com/arturoguerra/destinyarena-accounts/internal/config"
+	"fmt"
+	"net"
 
+	"github.com/destinyarena/profiles/internal/config"
+	"github.com/destinyarena/profiles/internal/logging"
+	database "github.com/destinyarena/profiles/pkg/database"
+	pb "github.com/destinyarena/profiles/proto"
+	"google.golang.org/grpc"
 )
 
 var log = logging.New()
 
-type ProfilesServer struct {
-    DB database.Client
-    pb.UnimplementedProfilesServer
+type profilesServer struct {
+	DB database.Client
+	pb.UnimplementedProfilesServer
 }
 
 func main() {
-    cfg := config.LoadConfig()
-    address := fmt.Sprintf("%s:%s", cfg.GRPCHost, cfg.GRPCPort)
-    lis, err := net.Listen("tcp", address)
-    if err != nil {
-        log.Fatal(err.Error())
-    }
+	cfg := config.LoadConfig()
+	address := fmt.Sprintf("%s:%s", cfg.GRPCHost, cfg.GRPCPort)
+	lis, err := net.Listen("tcp", address)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
-    log.Infof("Listening on: %s", address)
+	log.Infof("Listening on: %s", address)
 
-    s := grpc.NewServer()
-    dbcfg := config.LoadDatabaseConfig()
-    db, err := database.New(dbcfg.Username, dbcfg.Password, dbcfg.Host, dbcfg.DBName)
-    if err != nil {
-        log.Fatal(err)
-    }
+	s := grpc.NewServer()
+	dbcfg := config.LoadDatabaseConfig()
+	db, err := database.New(dbcfg.Username, dbcfg.Password, dbcfg.Host, dbcfg.DBName)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    as := &ProfilesServer{
-        DB: db,
-    }
+	as := &profilesServer{
+		DB: db,
+	}
 
-    pb.RegisterProfilesServer(s, as)
-    if err := s.Serve(lis); err != nil {
-        db.Close()
-        log.Fatalf("Failed to serve: %v", err)
-    }
+	pb.RegisterProfilesServer(s, as)
+	if err := s.Serve(lis); err != nil {
+		db.Close()
+		log.Fatalf("Failed to serve: %v", err)
+	}
 
-    db.Close()
+	db.Close()
 }

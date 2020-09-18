@@ -8,7 +8,7 @@ all: clean build
 
 proto-build:
 	rm -rf proto/*.go
-	protoc -I ./proto ./proto/$(APPNAME).proto --go_out=plugins=grpc:proto
+	protoc  --go_out=plugins=grpc:./proto -I ./proto ./proto/profiles.proto
 
 clean:
 	rm -rf bin

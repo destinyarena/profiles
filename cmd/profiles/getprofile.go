@@ -1,23 +1,25 @@
 package main
 
 import (
-    "context"
-    pb "github.com/arturoguerra/destinyarena-accounts/proto"
+	"context"
+
+	pb "github.com/destinyarena/profiles/proto"
 )
 
-func (p *ProfilesServer) GetProfile(ctx context.Context, in *pb.IdRequest) (*pb.ProfileReply, error) {
-    log.Infof("Fetching Profile for: %s", in.GetId())
-    err, u := p.DB.GetUser(in.GetId())
-    if err != nil {
-        log.Error(err)
-        return nil, err
-    }
+// GetProfile returns a single profile
+func (p *profilesServer) GetProfile(ctx context.Context, in *pb.IdRequest) (*pb.ProfileReply, error) {
+	log.Infof("Fetching Profile for: %s", in.GetId())
+	u, err := p.DB.GetUser(in.GetId())
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
 
-    return &pb.ProfileReply{
-        Id: u.UUID.String(),
-        Discord: u.Discord,
-        Bungie: u.Bungie,
-        Faceit: u.Faceit,
-        Banned: u.Banned,
-    }, nil
+	return &pb.ProfileReply{
+		Id:      u.UUID.String(),
+		Discord: u.Discord,
+		Bungie:  u.Bungie,
+		Faceit:  u.Faceit,
+		Banned:  u.Banned,
+	}, nil
 }

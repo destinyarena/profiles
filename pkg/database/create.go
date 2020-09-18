@@ -5,24 +5,25 @@ This Check if a user is already in the database and adds them if they are not
 */
 
 import (
-    "errors"
+	"errors"
 )
 
-func (c *client) RegisterUser(discord, bungie, faceit string) (error, *User) {
-    u := User{}
-    if c.Where("discord = ? OR faceit = ? OR bungie = ?", discord, faceit, bungie).First(&u).RecordNotFound() {
-        newUser := &User{
-            Discord: discord,
-            Bungie:  bungie,
-            Faceit:  faceit,
-        }
+func (c *client) RegisterUser(discord, bungie, faceit, iphash string) (*User, error) {
+	u := User{}
+	if c.Where("discord = ? OR faceit = ? OR bungie = ?", discord, faceit, bungie).First(&u).RecordNotFound() {
+		newUser := &User{
+			Discord: discord,
+			Bungie:  bungie,
+			Faceit:  faceit,
+			IPHash:  iphash,
+		}
 
-        c.Create(newUser)
+		c.Create(newUser)
 
-        return nil, newUser
-    }
+		return newUser, nil
+	}
 
-    err := errors.New("Member already exists")
+	err := errors.New("Member already exists")
 
-    return err, &u
+	return &u, err
 }

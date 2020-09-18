@@ -5,15 +5,15 @@ This Check if a user is already in the database and adds them if they are not
 */
 
 import (
-    "errors"
+	"errors"
 )
 
-func (c *client) GetUser(uid string) (error, *User) {
-    u := User{}
-    if c.Where("discord = ? OR faceit = ? OR bungie = ?", uid, uid, uid).First(&u).RecordNotFound() {
-        return errors.New("User not found"), nil
-    }
+// GetUser fetches a user from the database
+func (c *client) GetUser(uid string) (*User, error) {
+	u := User{}
+	if c.Where("discord = ? OR faceit = ? OR bungie = ?", uid, uid, uid).First(&u).RecordNotFound() {
+		return nil, errors.New("User not found")
+	}
 
-
-    return nil, &u
+	return &u, nil
 }

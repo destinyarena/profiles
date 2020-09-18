@@ -2,12 +2,16 @@
 
 syntax = "proto3";
 
+option go_package = ".;profiles";
+
 package profiles;
+
 
 service profiles {
     rpc GetProfile(IdRequest) returns (ProfileReply) {}
     rpc GetAllProfiles(Empty) returns (stream ProfileReply) {}
     rpc CreateProfile(ProfileRequest) returns (ProfileReply) {}
+    rpc GetProfilesByIP(IPRequest) returns (stream ProfileReply) {}
     rpc RemoveProfile(IdRequest) returns (Empty) {}
     rpc Ban(IdRequest) returns (Empty) {}
     rpc Unban(IdRequest) returns (Empty) {}
@@ -17,12 +21,17 @@ message IdRequest {
     string id = 1;
 }
 
+message IPRequest {
+    string iphash = 1;
+}
+
 message Empty {}
 
 message ProfileRequest {
     string discord = 1;
     string bungie = 2;
     string faceit = 3;
+    string iphash = 4;
 }
 
 message ProfileReply {
@@ -31,4 +40,5 @@ message ProfileReply {
     string bungie = 3;
     string faceit = 4;
     bool   banned = 5;
+    string iphash = 6;
 }
