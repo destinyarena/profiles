@@ -18,11 +18,12 @@ func (p *profilesServer) CreateProfile(ctx context.Context, in *pb.ProfileReques
 	log.Infof("Registering Discord: %s Bungie: %s Faceit: %s IPHash: %s", u.Discord, u.Bungie, u.Faceit, u.IPHash)
 
 	return &pb.ProfileReply{
-		Id:      u.UUID.String(),
-		Discord: u.Discord,
-		Bungie:  u.Bungie,
-		Faceit:  u.Faceit,
-		Banned:  u.Banned,
-		Iphash:  u.IPHash,
+		Id:        u.UUID.String(),
+		Discord:   u.Discord,
+		Bungie:    u.Bungie,
+		Faceit:    u.Faceit,
+		Banned:    u.Banned,
+		Iphash:    u.IPHash,
+		Banreason: u.BanReason,
 	}, nil
 }

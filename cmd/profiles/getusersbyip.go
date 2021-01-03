@@ -14,11 +14,12 @@ func (f *profilesServer) GetProfilesByIP(in *pb.IPRequest, stream pb.Profiles_Ge
 
 	for _, profile := range profiles {
 		p := &pb.ProfileReply{
-			Id:      profile.UUID.String(),
-			Discord: profile.Discord,
-			Bungie:  profile.Bungie,
-			Banned:  profile.Banned,
-			Iphash:  profile.IPHash,
+			Id:        profile.UUID.String(),
+			Discord:   profile.Discord,
+			Bungie:    profile.Bungie,
+			Banned:    profile.Banned,
+			Iphash:    profile.IPHash,
+			Banreason: profile.BanReason,
 		}
 
 		if err := stream.Send(p); err != nil {

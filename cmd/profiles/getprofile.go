@@ -16,10 +16,11 @@ func (p *profilesServer) GetProfile(ctx context.Context, in *pb.IdRequest) (*pb.
 	}
 
 	return &pb.ProfileReply{
-		Id:      u.UUID.String(),
-		Discord: u.Discord,
-		Bungie:  u.Bungie,
-		Faceit:  u.Faceit,
-		Banned:  u.Banned,
+		Id:        u.UUID.String(),
+		Discord:   u.Discord,
+		Bungie:    u.Bungie,
+		Faceit:    u.Faceit,
+		Banned:    u.Banned,
+		Banreason: u.BanReason,
 	}, nil
 }

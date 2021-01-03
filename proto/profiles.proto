@@ -46,4 +46,5 @@ message ProfileReply {
     string faceit = 4;
     bool   banned = 5;
     string iphash = 6;
+    string banreason = 7;
 }

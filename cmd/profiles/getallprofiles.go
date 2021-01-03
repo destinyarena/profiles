@@ -15,11 +15,12 @@ func (f *profilesServer) GetAllProfiles(in *pb.Empty, stream pb.Profiles_GetAllP
 
 	for _, profile := range profiles {
 		p := &pb.ProfileReply{
-			Id:      profile.UUID.String(),
-			Discord: profile.Discord,
-			Bungie:  profile.Bungie,
-			Faceit:  profile.Faceit,
-			Banned:  profile.Banned,
+			Id:        profile.UUID.String(),
+			Discord:   profile.Discord,
+			Bungie:    profile.Bungie,
+			Faceit:    profile.Faceit,
+			Banned:    profile.Banned,
+			Banreason: profile.BanReason,
 		}
 
 		if err := stream.Send(p); err != nil {
