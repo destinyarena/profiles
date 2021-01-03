@@ -15,7 +15,8 @@ type (
 
 	// Client exports database functionalities
 	Client interface {
-		Ban(string) error
+		Ban(string, string) error
+		Unban(string) error
 		RegisterUser(string, string, string, string) (*User, error)
 		GetAllUsers() ([]*User, error)
 		GetUser(string) (*User, error)

@@ -13,12 +13,17 @@ service profiles {
     rpc CreateProfile(ProfileRequest) returns (ProfileReply) {}
     rpc GetProfilesByIP(IPRequest) returns (stream ProfileReply) {}
     rpc RemoveProfile(IdRequest) returns (Empty) {}
-    rpc Ban(IdRequest) returns (Empty) {}
+    rpc Ban(BanRequest) returns (Empty) {}
     rpc Unban(IdRequest) returns (Empty) {}
 }
 
 message IdRequest {
     string id = 1;
+}
+
+message BanRequest {
+    string id = 1;
+    string reason = 2;
 }
 
 message IPRequest {

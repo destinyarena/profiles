@@ -8,12 +8,13 @@ import (
 // User is the DB Structure for a user profile
 type User struct {
 	gorm.Model
-	UUID    uuid.UUID `gorm:"primary_key"`
-	Discord string    `gorm:"unique"`
-	Faceit  string    `gorm:"unique"`
-	Bungie  string    `gorm:"unique"`
-	Banned  bool      `gorm:"default:false"`
-	IPHash  string
+	UUID      uuid.UUID `gorm:"primary_key"`
+	Discord   string    `gorm:"unique"`
+	Faceit    string    `gorm:"unique"`
+	Bungie    string    `gorm:"unique"`
+	Banned    bool      `gorm:"default:false"`
+	BanReason string
+	IPHash    string
 }
 
 // TableName sets the table name
