@@ -8,7 +8,9 @@ all: clean build
 
 proto-build:
 	rm -rf proto/*.go
-	protoc  --go_out=plugins=grpc:./proto -I ./proto ./proto/profiles.proto
+	protoc --go_out=. --go_opt=paths=source_relative \
+           --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+		   ./proto/profiles.proto
 
 clean:
 	rm -rf bin
