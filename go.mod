@@ -9,7 +9,7 @@ require (
 	github.com/onrik/logrus v0.9.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.9.0
-	github.com/tidwall/gjson v1.9.1 // indirect
+	github.com/tidwall/gjson v1.9.3 // indirect
 	golang.org/x/net v0.1.0 // indirect
 	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c // indirect
 	google.golang.org/grpc v1.50.1
